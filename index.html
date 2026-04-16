@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成語小達人 🏆</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFF8F0;
+  --card: #FFFFFF;
+  --primary: #FF6B35;
+  --secondary: #4ECDC4;
+  --accent: #FFE66D;
+  --correct: #2ECC71;
+  --wrong: #E74C3C;
+  --text: #2D3436;
+  --text-light: #636E72;
+  --shadow: 0 8px 32px rgba(0,0,0,0.08);
+  --radius: 20px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* floating decorations */
+.deco {
+  position: fixed;
+  border-radius: 50%;
+  opacity: .12;
+  pointer-events: none;
+  z-index: 0;
+}
+.deco-1 { width:300px;height:300px;background:var(--primary);top:-80px;left:-80px; }
+.deco-2 { width:200px;height:200px;background:var(--secondary);bottom:-60px;right:-40px; }
+.deco-3 { width:150px;height:150px;background:var(--accent);top:40%;right:-50px; }
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== START SCREEN ===== */
+.start-screen {
+  text-align: center;
+  padding: 60px 20px;
+  animation: fadeUp .6s ease;
+}
+.start-screen h1 {
+  font-size: 2.6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), #E84393);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.start-screen .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 36px;
+}
+.start-screen .mascot {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 24px;
+  animation: bounce 2s infinite;
+}
+.mode-select {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.mode-btn {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+.mode-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.mode-btn.primary { background: var(--primary); color: #fff; }
+.mode-btn.secondary { background: var(--secondary); color: #fff; }
+
+/* ===== PROGRESS BAR ===== */
+.progress-area {
+  margin-bottom: 20px;
+}
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+.progress-bar {
+  height: 12px;
+  background: #E8E8E8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+.score-badge {
+  background: var(--accent);
+  color: var(--text);
+  padding: 4px 14px;
+  border-radius: 99px;
+  font-weight: 900;
+  font-size: .95rem;
+}
+
+/* ===== QUESTION CARD ===== */
+.question-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 24px;
+  animation: fadeUp .4s ease;
+}
+.q-number {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: .85rem;
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 16px;
+}
+.q-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  min-height: 60px;
+}
+.q-text .blank {
+  display: inline-block;
+  border-bottom: 3px dashed var(--primary);
+  min-width: 100px;
+  text-align: center;
+  color: var(--primary);
+  font-weight: 900;
+  padding: 0 4px;
+}
+
+/* ===== OPTIONS ===== */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.opt-btn {
+  padding: 14px 12px;
+  border: 3px solid #E8E8E8;
+  border-radius: 14px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.opt-btn:hover:not(.disabled) {
+  border-color: var(--primary);
+  transform: scale(1.03);
+}
+.opt-btn.correct {
+  border-color: var(--correct);
+  background: #D4EDDA;
+  animation: pop .3s ease;
+}
+.opt-btn.wrong {
+  border-color: var(--wrong);
+  background: #FDECEA;
+  animation: shake .4s ease;
+}
+.opt-btn.disabled { cursor: default; opacity: .7; }
+.opt-btn.show-answer {
+  border-color: var(--correct);
+  background: #D4EDDA;
+}
+
+/* ===== FEEDBACK ===== */
+.feedback {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: .95rem;
+  line-height: 1.6;
+  animation: fadeUp .3s ease;
+}
+.feedback.correct { background: #D4EDDA; color: #155724; }
+.feedback.wrong { background: #FDECEA; color: #721C24; }
+.feedback .fb-icon { font-size: 1.4rem; margin-right: 6px; }
+
+.next-btn {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: var(--primary);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+.next-btn:hover { background: #E85A28; transform: translateY(-2px); }
+
+/* ===== BACK BUTTON ===== */
+.back-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: all .2s;
+  margin-bottom: 14px;
+}
+.back-home-btn:hover {
+  background: rgba(0,0,0,.06);
+  color: var(--primary);
+}
+.back-home-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===== EXIT CONFIRM OVERLAY ===== */
+.exit-confirm {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .2s ease;
+}
+.exit-confirm.hidden { display: none !important; }
+.exit-confirm-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 28px 24px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,.15);
+  animation: fadeUp .3s ease;
+}
+.exit-confirm-box p {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.7;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+.exit-confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+.exit-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+.exit-btn.cancel {
+  background: #E8E8E8;
+  color: var(--text);
+}
+.exit-btn.cancel:hover { background: #D5D5D5; }
+.exit-btn.confirm {
+  background: var(--primary);
+  color: #fff;
+}
+.exit-btn.confirm:hover { background: #E85A28; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== RESULT SCREEN ===== */
+.result-screen {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeUp .5s ease;
+}
+.result-screen .big-emoji { font-size: 5rem; display: block; margin-bottom: 16px; }
+.result-screen h2 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+.result-screen .score-text {
+  font-size: 1.3rem;
+  color: var(--text-light);
+  margin-bottom: 28px;
+}
+.result-screen .score-text strong {
+  color: var(--primary);
+  font-size: 2.2rem;
+}
+.star-row { font-size: 2.4rem; margin-bottom: 20px; letter-spacing: 6px; }
+
+.review-section {
+  text-align: left;
+  margin-top: 30px;
+}
+.review-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: var(--text-light);
+}
+.review-item {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-item .ri-icon { font-size: 1.3rem; }
+.review-item .ri-text { font-size: .95rem; line-height: 1.5; }
+.review-item .ri-text strong { color: var(--primary); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes bounce {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-14px); }
+}
+@keyframes pop {
+  0% { transform:scale(1); }
+  50% { transform:scale(1.08); }
+  100% { transform:scale(1); }
+}
+@keyframes shake {
+  0%,100% { transform:translateX(0); }
+  25% { transform:translateX(-6px); }
+  75% { transform:translateX(6px); }
+}
+@keyframes confetti-fall {
+  0% { transform:translateY(-10vh) rotate(0deg); opacity:1; }
+  100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  z-index: 99;
+  animation: confetti-fall linear forwards;
+  pointer-events: none;
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="deco deco-1"></div>
+<div class="deco deco-2"></div>
+<div class="deco deco-3"></div>
+
+<div class="container">
+  <!-- START -->
+  <div id="startScreen" class="start-screen">
+    <span class="mascot">📚</span>
+    <h1>成語小達人</h1>
+    <p class="subtitle">三年級成語大挑戰！你準備好了嗎？</p>
+    <div class="mode-select">
+      <button class="mode-btn primary" onclick="startQuiz('meaning')">📝 看解釋選成語</button>
+      <button class="mode-btn secondary" onclick="startQuiz('fill')">✏️ 成語填空題</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizArea" class="hidden">
+    <button class="back-home-btn" onclick="showExitConfirm()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      回首頁
+    </button>
+    <!-- inline confirm overlay -->
+    <div id="exitConfirm" class="exit-confirm hidden">
+      <div class="exit-confirm-box">
+        <p>確定要回首頁嗎？<br>目前的測驗進度不會保留喔！</p>
+        <div class="exit-confirm-actions">
+          <button class="exit-btn cancel" onclick="hideExitConfirm()">繼續作答</button>
+          <button class="exit-btn confirm" onclick="goHome()">回首頁</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-area">
+      <div class="progress-info">
+        <span id="progressLabel">第 1 題 / 共 10 題</span>
+        <span class="score-badge" id="scoreBadge">⭐ 0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="resultScreen" class="result-screen hidden"></div>
+</div>
+
+<script>
+const ALL_IDIOMS = [
+  { idiom:"事與願違", meaning:"事情的發展跟自己的期望不一樣", example:"他努力準備考試，結果卻______，成績不如預期。" },
+  { idiom:"揠苗助長", meaning:"用不正確的方法想要加速完成，反而弄壞事情", example:"學東西不能急，否則就像______一樣，反而學不好。" },
+  { idiom:"開誠佈公", meaning:"用真誠、公開的態度來說話或做事", example:"老師______地告訴大家考試的規則。" },
+  { idiom:"焦頭爛額", meaning:"形容非常忙碌或被事情弄得很狼狽", example:"期末考要到了，小明忙得______。" },
+  { idiom:"披星戴月", meaning:"形容非常早出晚歸、十分辛苦", example:"爸爸每天______地工作，很辛苦。" },
+  { idiom:"價值連城", meaning:"形容東西非常珍貴，價值很高", example:"博物館裡的古董都是______的寶物。" },
+  { idiom:"功敗垂成", meaning:"事情快要成功的時候卻失敗了", example:"比賽最後一分鐘被逆轉，真是______。" },
+  { idiom:"順水推舟", meaning:"趁著有利的情況，順勢去做某件事", example:"既然大家都同意，我就______答應了。" },
+  { idiom:"千鈞一髮", meaning:"形容情況非常危急、緊張", example:"消防員在______的時刻救出了小貓。" },
+  { idiom:"拾人牙慧", meaning:"抄別人說過的話，當作自己的想法", example:"寫作文要有自己的想法，不要______。" },
+  { idiom:"不學無術", meaning:"沒有學問也沒有本領", example:"只有努力學習，才不會變成______的人。" },
+  { idiom:"風馳電掣", meaning:"形容速度非常快，像風和閃電一樣", example:"賽車在跑道上______地飛過。" },
+  { idiom:"數典忘祖", meaning:"忘記了自己的根本和歷史", example:"出國留學也不能忘本，不要______。" },
+  { idiom:"惱羞成怒", meaning:"因為覺得丟臉而生氣發怒", example:"弟弟被指出錯誤後，______地大吼。" },
+  { idiom:"循循善誘", meaning:"有耐心地一步一步引導教導", example:"好老師會______地教導學生。" },
+  { idiom:"班門弄斧", meaning:"在高手面前炫耀自己的本領", example:"在書法大師面前寫字，我可不敢______。" },
+  { idiom:"門庭若市", meaning:"家門前像市場一樣熱鬧，形容來訪的人很多", example:"過年期間，阿嬤家______，好熱鬧！" },
+  { idiom:"付之一炬", meaning:"一把火把東西全部燒掉，也比喻全部毀掉", example:"那場大火把倉庫的貨物全部______。" },
+  { idiom:"設身處地", meaning:"站在別人的立場去想事情", example:"我們要______地為別人著想。" },
+  { idiom:"猶豫不決", meaning:"心裡拿不定主意，沒辦法做決定", example:"他______，不知道要選哪個禮物。" },
+  { idiom:"有目共睹", meaning:"大家都看得到，非常明顯", example:"他的進步是______的，大家都看到了。" },
+  { idiom:"立竿見影", meaning:"做了之後馬上就看到效果", example:"這個方法______，成績馬上進步了。" },
+  { idiom:"包羅萬象", meaning:"包含各種各樣的東西，內容非常豐富", example:"這本百科全書______，什麼知識都有。" },
+  { idiom:"觸類旁通", meaning:"學會一樣東西之後，能舉一反三理解相關的事物", example:"他很聰明，學了數學就能______，其他科目也進步了。" }
+];
+
+let quizMode = '';
+let questions = [];
+let currentQ = 0;
+let score = 0;
+let answered = false;
+let results = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(mode) {
+  quizMode = mode;
+  const shuffled = shuffle(ALL_IDIOMS);
+  questions = shuffled.slice(0, 10);
+  currentQ = 0;
+  score = 0;
+  results = [];
+  answered = false;
+
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('quizArea').classList.remove('hidden');
+  renderQuestion();
+}
+
+function getDistractors(correct, count) {
+  const pool = ALL_IDIOMS.filter(i => i.idiom !== correct.idiom);
+  const shuffled = shuffle(pool);
+  return shuffled.slice(0, count);
+}
+
+function renderQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  const distractors = getDistractors(q, 3);
+  const options = shuffle([q, ...distractors]);
+
+  // progress
+  document.getElementById('progressLabel').textContent = `第 ${currentQ+1} 題 / 共 ${questions.length} 題`;
+  document.getElementById('scoreBadge').textContent = `⭐ ${score}`;
+  document.getElementById('progressFill').style.width = `${(currentQ / questions.length) * 100}%`;
+
+  let html = '';
+  html += `<span class="q-number">第 ${currentQ+1} 題</span>`;
+
+  if (quizMode === 'meaning') {
+    html += `<div class="q-text">「${q.meaning}」<br>這是哪一個成語呢？</div>`;
+    html += `<div class="options">`;
+    options.forEach((o, i) => {
+      html += `<button class="opt-btn" data-idx="${i}" data-idiom="${o.idiom}" onclick="selectAnswer(this,'${q.idiom}')">${o.idiom}</button>`;
+    });
+    html += `</div>`;
+  } else {
+    const sentence = q.example.replace(q.idiom, `<span class="blank">？？？？</span>`).replace('______', `<span class="blank">？？？？</span>`);
+    html += `<div class="q-text">${sentence}</div>`;
+    html += `<div class="options">`;
+    options.forEach((o, i) => {
+      html += `<button class="opt-btn" data-idx="${i}" data-idiom="${o.idiom}" onclick="selectAnswer(this,'${q.idiom}')">${o.idiom}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div id="feedback" class="hidden"></div>`;
+  html += `<button id="nextBtn" class="next-btn hidden" onclick="nextQuestion()">下一題 ➜</button>`;
+
+  const card = document.getElementById('questionCard');
+  card.innerHTML = html;
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'fadeUp .4s ease';
+}
+
+function selectAnswer(btn, correctIdiom) {
+  if (answered) return;
+  answered = true;
+
+  const selected = btn.getAttribute('data-idiom');
+  const isCorrect = selected === correctIdiom;
+  const q = questions[currentQ];
+
+  // disable all
+  document.querySelectorAll('.opt-btn').forEach(b => b.classList.add('disabled'));
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('scoreBadge').textContent = `⭐ ${score}`;
+  } else {
+    btn.classList.add('wrong');
+    // show correct
+    document.querySelectorAll('.opt-btn').forEach(b => {
+      if (b.getAttribute('data-idiom') === correctIdiom) b.classList.add('show-answer');
+    });
+  }
+
+  results.push({ idiom: q.idiom, meaning: q.meaning, correct: isCorrect, selected });
+
+  // feedback
+  const fb = document.getElementById('feedback');
+  fb.classList.remove('hidden', 'correct', 'wrong');
+  if (isCorrect) {
+    fb.classList.add('correct');
+    const cheers = ['太棒了！🎉', '答對了！好厲害！✨', '正確！你好聰明！💪', '完全正確！🌟'];
+    fb.innerHTML = `<span class="fb-icon">✅</span>${cheers[Math.floor(Math.random()*cheers.length)]}<br>「<strong>${q.idiom}</strong>」：${q.meaning}`;
+  } else {
+    fb.classList.add('wrong');
+    fb.innerHTML = `<span class="fb-icon">❌</span>再想想喔！正確答案是「<strong>${correctIdiom}</strong>」<br>${q.meaning}`;
+  }
+
+  document.getElementById('nextBtn').classList.remove('hidden');
+  document.getElementById('nextBtn').textContent = currentQ < questions.length - 1 ? '下一題 ➜' : '看結果 🏆';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizArea').classList.add('hidden');
+  const rs = document.getElementById('resultScreen');
+  rs.classList.remove('hidden');
+
+  const pct = score / questions.length;
+  let emoji, title, msg;
+  if (pct === 1) { emoji='🏆'; title='滿分！超級厲害！'; msg='你是成語大師！'; }
+  else if (pct >= .8) { emoji='🌟'; title='好棒棒！'; msg='你對成語很熟悉呢！'; }
+  else if (pct >= .6) { emoji='💪'; title='不錯喔！'; msg='再多練習就能更棒！'; }
+  else if (pct >= .4) { emoji='📖'; title='加油！'; msg='多讀幾遍就會記住囉！'; }
+  else { emoji='🤗'; title='沒關係！'; msg='慢慢學，一定會進步的！'; }
+
+  const stars = '⭐'.repeat(Math.max(1, Math.round(pct * 5))) + '☆'.repeat(5 - Math.max(1, Math.round(pct * 5)));
+
+  let html = `
+    <span class="big-emoji">${emoji}</span>
+    <h2>${title}</h2>
+    <div class="star-row">${stars}</div>
+    <p class="score-text">答對 <strong>${score}</strong> / ${questions.length} 題</p>
+    <div class="mode-select">
+      <button class="mode-btn primary" onclick="startQuiz('meaning')">📝 再玩一次（看解釋選成語）</button>
+      <button class="mode-btn secondary" onclick="startQuiz('fill')">✏️ 再玩一次（成語填空題）</button>
+      <button class="mode-btn" style="background:#DFE6E9;color:var(--text);" onclick="goHome()">🏠 回首頁</button>
+    </div>
+  `;
+
+  // wrong answers review
+  const wrongs = results.filter(r => !r.correct);
+  if (wrongs.length > 0) {
+    html += `<div class="review-section"><h3>📝 需要複習的成語：</h3>`;
+    wrongs.forEach(r => {
+      html += `<div class="review-item"><span class="ri-icon">📌</span><div class="ri-text"><strong>${r.idiom}</strong>：${r.meaning}</div></div>`;
+    });
+    html += `</div>`;
+  }
+
+  rs.innerHTML = html;
+
+  document.getElementById('progressFill').style.width = '100%';
+
+  if (pct >= .8) spawnConfetti();
+}
+
+function goHome() {
+  hideExitConfirm();
+  document.getElementById('resultScreen').classList.add('hidden');
+  document.getElementById('quizArea').classList.add('hidden');
+  document.getElementById('startScreen').classList.remove('hidden');
+}
+
+function showExitConfirm() {
+  document.getElementById('exitConfirm').classList.remove('hidden');
+}
+
+function hideExitConfirm() {
+  document.getElementById('exitConfirm').classList.add('hidden');
+}
+
+function spawnConfetti() {
+  const colors = ['#FF6B35','#4ECDC4','#FFE66D','#E84393','#6C5CE7','#00B894'];
+  for (let i = 0; i < 50; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width = (6 + Math.random() * 8) + 'px';
+    el.style.height = (6 + Math.random() * 8) + 'px';
+    el.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    el.style.animationDuration = (2 + Math.random() * 3) + 's';
+    el.style.animationDelay = Math.random() * 2 + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }
+}
+</script>
+</body>
+</html>
