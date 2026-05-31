@@ -21,88 +21,39 @@
   --gold: #FFD700;
   --silver: #C0C0C0;
   --bronze: #CD7F32;
+  --story: #6C5CE7;
 }
-
 * { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  font-family: 'Noto Sans TC', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
+body { font-family:'Noto Sans TC',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
 .deco { position:fixed; border-radius:50%; opacity:.12; pointer-events:none; z-index:0; }
 .deco-1 { width:300px;height:300px;background:var(--primary);top:-80px;left:-80px; }
 .deco-2 { width:200px;height:200px;background:var(--secondary);bottom:-60px;right:-40px; }
 .deco-3 { width:150px;height:150px;background:var(--accent);top:40%;right:-50px; }
+.container { max-width:640px; margin:0 auto; padding:24px 16px 40px; position:relative; z-index:1; }
 
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
-  position: relative;
-  z-index: 1;
-}
-
-/* ===== START SCREEN ===== */
+/* START */
 .start-screen { text-align:center; padding:40px 20px; animation:fadeUp .6s ease; }
-.start-screen h1 {
-  font-size: 2.6rem; font-weight: 900;
-  background: linear-gradient(135deg, var(--primary), #E84393);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 6px;
-}
+.start-screen h1 { font-size:2.6rem; font-weight:900; background:linear-gradient(135deg,var(--primary),#E84393); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; }
 .start-screen .subtitle { font-size:1.05rem; color:var(--text-light); margin-bottom:28px; }
 .mascot { font-size:4.5rem; display:block; margin-bottom:18px; animation:bounce 2s infinite; }
-
-/* name input */
-.name-input-area {
-  max-width: 320px;
-  margin: 0 auto 24px;
-}
-.name-input-area label {
-  display: block;
-  font-size: .9rem;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 8px;
-  text-align: left;
-}
-.name-input {
-  width: 100%;
-  padding: 14px 18px;
-  border: 3px solid #E8E8E8;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-  background: #fff;
-  outline: none;
-  transition: border-color .2s;
-}
-.name-input:focus { border-color: var(--primary); }
+.name-input-area { max-width:320px; margin:0 auto 24px; }
+.name-input-area label { display:block; font-size:.9rem; font-weight:700; color:var(--text-light); margin-bottom:8px; text-align:left; }
+.name-input { width:100%; padding:14px 18px; border:3px solid #E8E8E8; border-radius:14px; font-family:inherit; font-size:1.1rem; font-weight:700; color:var(--text); background:#fff; outline:none; transition:border-color .2s; }
+.name-input:focus { border-color:var(--primary); }
 .name-input::placeholder { color:#CCC; font-weight:400; }
-
 .mode-select { display:flex; flex-direction:column; gap:12px; max-width:320px; margin:0 auto; }
-.mode-btn {
-  padding:15px 24px; border:none; border-radius:16px; font-family:inherit;
-  font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s;
-  display:flex; align-items:center; gap:10px; justify-content:center;
-}
+.mode-btn { padding:15px 24px; border:none; border-radius:16px; font-family:inherit; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:10px; justify-content:center; }
 .mode-btn:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
 .mode-btn:disabled { opacity:.5; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
 .mode-btn.primary { background:var(--primary); color:#fff; }
 .mode-btn.secondary { background:var(--secondary); color:#fff; }
+.mode-btn.story-mode { background:var(--story); color:#fff; }
 .mode-btn.ghost { background:transparent; border:3px solid #E8E8E8; color:var(--text); font-size:.95rem; }
 .mode-btn.ghost:hover { border-color:var(--primary); color:var(--primary); }
-
 .divider { display:flex; align-items:center; gap:12px; margin:20px auto; max-width:320px; color:#CCC; font-size:.85rem; }
 .divider::before,.divider::after { content:''; flex:1; height:1px; background:#E0E0E0; }
 
-/* ===== PROGRESS ===== */
+/* PROGRESS */
 .progress-area { margin-bottom:18px; }
 .progress-info { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:.9rem; font-weight:700; color:var(--text-light); }
 .progress-bar { height:12px; background:#E8E8E8; border-radius:99px; overflow:hidden; }
@@ -110,125 +61,167 @@ body {
 .score-badge { background:var(--accent); color:var(--text); padding:4px 14px; border-radius:99px; font-weight:900; font-size:.95rem; }
 .player-tag { font-size:.85rem; color:var(--primary); font-weight:700; margin-bottom:8px; display:block; }
 
-/* ===== QUESTION CARD ===== */
+/* QUESTION */
 .question-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px 22px; animation:fadeUp .4s ease; }
 .q-number { display:inline-block; background:var(--primary); color:#fff; font-weight:900; font-size:.85rem; padding:4px 14px; border-radius:99px; margin-bottom:14px; }
 .q-text { font-size:1.2rem; font-weight:700; line-height:1.7; margin-bottom:22px; min-height:56px; }
 .q-text .blank { display:inline-block; border-bottom:3px dashed var(--primary); min-width:90px; text-align:center; color:var(--primary); font-weight:900; padding:0 4px; }
-
 .options { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.opt-btn {
-  padding:13px 10px; border:3px solid #E8E8E8; border-radius:14px; background:#fff;
-  font-family:inherit; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s;
-}
+.opt-btn { padding:13px 10px; border:3px solid #E8E8E8; border-radius:14px; background:#fff; font-family:inherit; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s; }
 .opt-btn:hover:not(.disabled) { border-color:var(--primary); transform:scale(1.03); }
 .opt-btn.correct { border-color:var(--correct); background:#D4EDDA; animation:pop .3s ease; }
 .opt-btn.wrong { border-color:var(--wrong); background:#FDECEA; animation:shake .4s ease; }
 .opt-btn.disabled { cursor:default; opacity:.7; }
 .opt-btn.show-answer { border-color:var(--correct); background:#D4EDDA; }
-
 .feedback { margin-top:18px; padding:14px; border-radius:14px; font-size:.93rem; line-height:1.6; animation:fadeUp .3s ease; }
 .feedback.correct { background:#D4EDDA; color:#155724; }
 .feedback.wrong { background:#FDECEA; color:#721C24; }
 .feedback .fb-icon { font-size:1.3rem; margin-right:5px; }
-
-.next-btn {
-  display:block; width:100%; margin-top:16px; padding:13px; border:none; border-radius:14px;
-  background:var(--primary); color:#fff; font-family:inherit; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s;
-}
+.fb-story { margin-top:10px; padding:12px; background:rgba(108,92,231,.08); border-radius:10px; border-left:4px solid var(--story); font-size:.88rem; line-height:1.6; color:var(--text); }
+.fb-story strong { color:var(--story); }
+.next-btn { display:block; width:100%; margin-top:16px; padding:13px; border:none; border-radius:14px; background:var(--primary); color:#fff; font-family:inherit; font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .2s; }
 .next-btn:hover { background:#E85A28; transform:translateY(-2px); }
 
-/* ===== BACK BUTTON ===== */
-.back-home-btn {
-  display:inline-flex; align-items:center; gap:6px; background:none; border:none;
-  font-family:inherit; font-size:.95rem; font-weight:700; color:var(--text-light);
-  cursor:pointer; padding:8px 14px; border-radius:12px; transition:all .2s; margin-bottom:12px;
-}
+/* BACK */
+.back-home-btn { display:inline-flex; align-items:center; gap:6px; background:none; border:none; font-family:inherit; font-size:.95rem; font-weight:700; color:var(--text-light); cursor:pointer; padding:8px 14px; border-radius:12px; transition:all .2s; margin-bottom:12px; }
 .back-home-btn:hover { background:rgba(0,0,0,.06); color:var(--primary); }
 .back-home-btn svg { width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
 
-/* ===== OVERLAY ===== */
-.overlay {
-  position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,.45);
-  z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s ease;
-}
+/* OVERLAY */
+.overlay { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,.45); z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s ease; }
 .overlay.hidden { display:none !important; }
-.overlay-box {
-  background:#fff; border-radius:20px; padding:30px 26px 22px; max-width:320px; width:90%;
-  text-align:center; box-shadow:0 12px 40px rgba(0,0,0,.15); animation:fadeUp .3s ease;
-}
+.overlay-box { background:#fff; border-radius:20px; padding:30px 26px 22px; max-width:320px; width:90%; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,.15); animation:fadeUp .3s ease; }
 .overlay-box p { font-size:1.05rem; font-weight:700; line-height:1.7; margin-bottom:20px; color:var(--text); }
 .overlay-actions { display:flex; gap:10px; }
-.ov-btn {
-  flex:1; padding:12px 8px; border:none; border-radius:12px; font-family:inherit;
-  font-size:1rem; font-weight:700; cursor:pointer; transition:all .2s;
-}
+.ov-btn { flex:1; padding:12px 8px; border:none; border-radius:12px; font-family:inherit; font-size:1rem; font-weight:700; cursor:pointer; transition:all .2s; }
 .ov-btn.cancel { background:#E8E8E8; color:var(--text); }
 .ov-btn.cancel:hover { background:#D5D5D5; }
 .ov-btn.confirm { background:var(--primary); color:#fff; }
 .ov-btn.confirm:hover { background:#E85A28; }
 
-/* ===== RESULT SCREEN ===== */
+/* RESULT */
 .result-screen { text-align:center; padding:36px 20px; animation:fadeUp .5s ease; }
 .result-screen .big-emoji { font-size:4.5rem; display:block; margin-bottom:12px; }
 .result-screen h2 { font-size:1.8rem; font-weight:900; margin-bottom:6px; }
 .result-screen .score-text { font-size:1.2rem; color:var(--text-light); margin-bottom:24px; }
 .result-screen .score-text strong { color:var(--primary); font-size:2rem; }
 .star-row { font-size:2.2rem; margin-bottom:16px; letter-spacing:5px; }
-
 .review-section { text-align:left; margin-top:28px; }
 .review-section h3 { font-size:1rem; margin-bottom:12px; color:var(--text-light); }
-.review-item { background:var(--card); border-radius:14px; padding:12px 16px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; align-items:center; gap:10px; }
-.review-item .ri-icon { font-size:1.2rem; }
+.review-item { background:var(--card); border-radius:14px; padding:12px 16px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; align-items:flex-start; gap:10px; }
+.review-item .ri-icon { font-size:1.2rem; margin-top:2px; }
 .review-item .ri-text { font-size:.9rem; line-height:1.5; }
 .review-item .ri-text strong { color:var(--primary); }
 
-/* ===== LEADERBOARD ===== */
+/* LEADERBOARD */
 .leaderboard-screen { padding:36px 20px; animation:fadeUp .5s ease; }
 .leaderboard-screen h2 { text-align:center; font-size:1.8rem; font-weight:900; margin-bottom:6px; }
 .lb-subtitle { text-align:center; color:var(--text-light); font-size:.95rem; margin-bottom:24px; }
-
-.lb-row {
-  display:flex; align-items:center; gap:12px; padding:14px 18px; margin-bottom:8px;
-  background:var(--card); border-radius:16px; box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
+.lb-row { display:flex; align-items:center; gap:12px; padding:14px 18px; margin-bottom:8px; background:var(--card); border-radius:16px; box-shadow:0 2px 10px rgba(0,0,0,.05); }
 .lb-row.top1 { border:2px solid var(--gold); background:linear-gradient(135deg,#FFFDF0,#FFF8E1); }
 .lb-row.top2 { border:2px solid var(--silver); background:linear-gradient(135deg,#FAFAFA,#F0F0F0); }
 .lb-row.top3 { border:2px solid var(--bronze); background:linear-gradient(135deg,#FFF8F0,#FCEBD8); }
-
-.lb-rank {
-  width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-weight:900; font-size:1rem; flex-shrink:0;
-}
+.lb-rank { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem; flex-shrink:0; }
 .lb-rank.r1 { background:var(--gold); color:#7A5C00; }
 .lb-rank.r2 { background:var(--silver); color:#555; }
 .lb-rank.r3 { background:var(--bronze); color:#fff; }
 .lb-rank.rn { background:#E8E8E8; color:var(--text-light); }
-
 .lb-info { flex:1; }
 .lb-name { font-weight:900; font-size:1.05rem; }
 .lb-detail { font-size:.8rem; color:var(--text-light); margin-top:2px; }
 .lb-score { font-weight:900; font-size:1.2rem; color:var(--primary); }
 .lb-score small { font-size:.75rem; color:var(--text-light); font-weight:400; }
-
 .lb-empty { text-align:center; padding:40px 20px; color:var(--text-light); font-size:1rem; }
 .lb-empty-icon { font-size:3rem; display:block; margin-bottom:12px; }
-
 .lb-actions { display:flex; flex-direction:column; gap:10px; max-width:320px; margin:24px auto 0; }
-.clear-lb-btn {
-  margin-top:10px; background:none; border:none; color:var(--wrong); font-family:inherit;
-  font-size:.85rem; cursor:pointer; font-weight:700; padding:8px;
-}
+.clear-lb-btn { margin-top:10px; background:none; border:none; color:var(--wrong); font-family:inherit; font-size:.85rem; cursor:pointer; font-weight:700; padding:8px; }
 .clear-lb-btn:hover { text-decoration:underline; }
 
-/* ===== ANIMATIONS ===== */
+/* ===== STORY ENCYCLOPEDIA ===== */
+.story-screen { padding:20px 0; animation:fadeUp .5s ease; }
+.story-screen h2 { text-align:center; font-size:1.8rem; font-weight:900; margin-bottom:4px; }
+.story-subtitle { text-align:center; color:var(--text-light); font-size:.95rem; margin-bottom:20px; }
+.story-nav { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:20px; }
+.story-nav-btn { width:44px; height:44px; border-radius:50%; border:none; background:var(--story); color:#fff; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.story-nav-btn:hover { transform:scale(1.1); }
+.story-nav-btn:disabled { opacity:.3; cursor:not-allowed; transform:none; }
+.story-nav-btn svg { width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
+.story-counter { font-weight:900; font-size:1rem; color:var(--text-light); min-width:80px; text-align:center; }
+
+.story-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
+  animation: fadeUp .35s ease;
+  border-top: 5px solid var(--story);
+}
+.story-card .sc-idiom {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--story);
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 4px;
+}
+.story-card .sc-section {
+  margin-bottom: 16px;
+}
+.story-card .sc-label {
+  font-size: .8rem;
+  font-weight: 900;
+  color: #fff;
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+.sc-label.meaning-label { background: var(--primary); }
+.sc-label.story-label { background: var(--story); }
+.sc-label.example-label { background: var(--secondary); }
+.story-card .sc-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+  padding-left: 4px;
+}
+.story-card .sc-story-text {
+  background: rgba(108,92,231,.06);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: .95rem;
+  line-height: 1.8;
+  color: var(--text);
+  border-left: 4px solid var(--story);
+}
+.story-grid-btn {
+  display:block; width:100%; margin-top:20px; padding:13px; border:none; border-radius:14px;
+  background:var(--story); color:#fff; font-family:inherit; font-size:1rem; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.story-grid-btn:hover { opacity:.9; transform:translateY(-2px); }
+
+/* story list grid */
+.story-list { margin-top:16px; }
+.story-list-item {
+  display:flex; align-items:center; gap:12px; padding:14px 16px; margin-bottom:8px;
+  background:var(--card); border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,.05);
+  cursor:pointer; transition:all .2s; border:2px solid transparent;
+}
+.story-list-item:hover { border-color:var(--story); transform:translateX(4px); }
+.story-list-item .sli-num { width:32px;height:32px;border-radius:50%;background:var(--story);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;flex-shrink:0; }
+.story-list-item .sli-info { flex:1; }
+.story-list-item .sli-idiom { font-weight:900; font-size:1.05rem; }
+.story-list-item .sli-meaning { font-size:.8rem; color:var(--text-light); margin-top:2px; }
+.story-list-item .sli-arrow { color:var(--text-light); font-size:1.2rem; }
+
+/* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
 @keyframes confetti-fall { 0%{transform:translateY(-10vh) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
-
 .confetti-piece { position:fixed; width:10px; height:10px; top:0; z-index:99; animation:confetti-fall linear forwards; pointer-events:none; }
 .hidden { display: none !important; }
 </style>
@@ -240,22 +233,20 @@ body {
 <div class="deco deco-3"></div>
 
 <div class="container">
-
   <!-- START -->
   <div id="startScreen" class="start-screen">
     <span class="mascot">📚</span>
     <h1>成語小達人</h1>
     <p class="subtitle">三年級成語大挑戰！你準備好了嗎？</p>
-
     <div class="name-input-area">
       <label for="playerName">👤 請輸入你的名字</label>
       <input type="text" id="playerName" class="name-input" placeholder="例如：小明" maxlength="10" autocomplete="off">
     </div>
-
     <div class="mode-select">
       <button class="mode-btn primary" id="btnMeaning" onclick="startQuiz('meaning')" disabled>📝 看解釋選成語</button>
       <button class="mode-btn secondary" id="btnFill" onclick="startQuiz('fill')" disabled>✏️ 成語填空題</button>
       <div class="divider">或</div>
+      <button class="mode-btn story-mode" onclick="showStoryList()">📖 成語故事圖鑑</button>
       <button class="mode-btn ghost" onclick="showLeaderboard()">🏆 查看排行榜</button>
     </div>
   </div>
@@ -263,8 +254,7 @@ body {
   <!-- QUIZ -->
   <div id="quizArea" class="hidden">
     <button class="back-home-btn" onclick="showExitConfirm()">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      回首頁
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>回首頁
     </button>
     <div id="exitConfirm" class="overlay hidden">
       <div class="overlay-box">
@@ -288,9 +278,10 @@ body {
 
   <!-- RESULT -->
   <div id="resultScreen" class="result-screen hidden"></div>
-
   <!-- LEADERBOARD -->
   <div id="leaderboardScreen" class="leaderboard-screen hidden"></div>
+  <!-- STORY -->
+  <div id="storyScreen" class="story-screen hidden"></div>
 
   <!-- CLEAR CONFIRM -->
   <div id="clearConfirm" class="overlay hidden">
@@ -305,167 +296,269 @@ body {
 </div>
 
 <script>
-const ALL_IDIOMS = [
-  { idiom:"初出茅廬", meaning:"比喻剛開始做事，還沒有經驗", example:"他______，很多事情還在學習中。" },
-  { idiom:"投機取巧", meaning:"用不正當的方法偷懶，想走捷徑", example:"做功課不能______，要自己認真寫。" },
-  { idiom:"禮尚往來", meaning:"別人對你好，你也應該對別人好", example:"他送我生日禮物，______，我也要送他一份。" },
-  { idiom:"耳濡目染", meaning:"經常看到聽到，不知不覺就受到影響", example:"他從小在音樂家庭長大，______之下也學會了彈琴。" },
-  { idiom:"文質彬彬", meaning:"形容一個人有禮貌、很有氣質的樣子", example:"新來的老師說話輕聲細語，看起來______。" },
-  { idiom:"雕蟲小技", meaning:"比喻很小的本領，不值得一提", example:"這點小把戲只是______，不算什麼。" },
-  { idiom:"目光如豆", meaning:"形容眼光短淺，看不到長遠的事情", example:"做事不能______，要看得遠一點。" },
-  { idiom:"珠圓玉潤", meaning:"形容聲音或文字非常圓滿好聽、流暢優美", example:"她唱歌的聲音______，大家都聽得入迷。" },
-  { idiom:"老成持重", meaning:"形容做事穩重、有經驗，不會衝動", example:"班長做事______，老師很放心。" },
-  { idiom:"口誅筆伐", meaning:"用說的和寫的方式嚴厲批評壞人壞事", example:"大家紛紛______，批評那個不公平的做法。" },
-  { idiom:"勢均力敵", meaning:"雙方的力量差不多，不分上下", example:"這兩支球隊______，比賽一定很精彩。" },
-  { idiom:"光怪陸離", meaning:"形容現象很奇特、五花八門", example:"夜市裡的東西______，什麼都有。" },
-  { idiom:"匹夫之勇", meaning:"只靠蠻力、不用腦筋的勇敢", example:"遇到困難要動腦想辦法，不能只靠______。" },
-  { idiom:"以德報怨", meaning:"用好的態度對待曾經對不起你的人", example:"他不記恨同學，選擇______，大家都很佩服他。" },
-  { idiom:"精益求精", meaning:"已經做得很好了，還要追求更好", example:"他的作品已經很棒了，但他______，繼續修改。" },
-  { idiom:"民不聊生", meaning:"老百姓的生活非常痛苦，活不下去", example:"故事裡的壞國王害得______，人民好可憐。" },
-  { idiom:"虎視眈眈", meaning:"像老虎一樣盯著獵物看，比喻心懷不軌地注視", example:"隔壁班的選手______地看著我們的分數。" },
-  { idiom:"義憤填膺", meaning:"看到不公平的事情，心中充滿了正義的憤怒", example:"看到有人欺負小動物，大家都______。" },
-  { idiom:"理直氣壯", meaning:"因為道理站在自己這邊，所以說話很有底氣", example:"他沒有做錯事，所以______地為自己解釋。" },
-  { idiom:"逃之夭夭", meaning:"形容跑得很快、趕緊逃走", example:"小狗打翻了垃圾桶，馬上______。" },
-  { idiom:"耳提面命", meaning:"在耳邊叮嚀、當面教導，形容非常認真地教誨", example:"媽媽______地提醒我過馬路要小心。" },
-  { idiom:"手足無措", meaning:"不知道該怎麼辦，非常慌張", example:"突然被老師點名上台，他嚇得______。" },
-  { idiom:"抱薪救火", meaning:"用錯誤的方法解決問題，反而讓問題更嚴重", example:"吵架的時候說氣話就像______，只會越吵越兇。" },
-  { idiom:"明察秋毫", meaning:"形容觀察力非常敏銳，連最細小的事都看得到", example:"老師______，誰偷吃東西馬上就知道。" }
+var ALL_IDIOMS = [
+  {
+    idiom:"初出茅廬",
+    meaning:"比喻剛開始做事，還沒有經驗",
+    example:"他______，很多事情還在學習中。",
+    story:"三國時代，諸葛亮住在茅草屋裡讀書。劉備三次親自去拜訪他，請他出山幫忙。諸葛亮答應後，第一次帶兵打仗就大獲全勝，讓所有人刮目相看。後來大家就用「初出茅廬」形容一個人剛出來做事、還缺乏經驗的樣子。"
+  },
+  {
+    idiom:"投機取巧",
+    meaning:"用不正當的方法偷懶，想走捷徑",
+    example:"做功課不能______，要自己認真寫。",
+    story:"從前有個木匠接了一個蓋房子的工作。他為了省錢，偷偷把好木頭換成便宜的爛木頭，以為沒人會發現。結果房子蓋好沒多久就塌了，他也因此失去了所有人的信任。這個故事告訴我們，做事不能「投機取巧」，貪快反而會害了自己。"
+  },
+  {
+    idiom:"禮尚往來",
+    meaning:"別人對你好，你也應該對別人好",
+    example:"他送我生日禮物，______，我也要送他一份。",
+    story:"這個成語出自古書《禮記》。古時候的人非常重視禮節，認為收到別人的禮物或好意，一定要回報對方。就像過年的時候，鄰居送你橘子，你也應該回送一些糖果，這樣大家的感情才會越來越好。"
+  },
+  {
+    idiom:"耳濡目染",
+    meaning:"經常看到聽到，不知不覺就受到影響",
+    example:"他從小在音樂家庭長大，______之下也學會了彈琴。",
+    story:"「濡」是沾濕的意思，「染」是染上顏色。耳朵常常聽到、眼睛常常看到，就像布放在染缸旁邊，不知不覺就被染上了顏色。比如一個小孩從小看爸媽做菜，長大後不用特別學，自然就會煮出好吃的料理。"
+  },
+  {
+    idiom:"文質彬彬",
+    meaning:"形容一個人有禮貌、很有氣質的樣子",
+    example:"新來的老師說話輕聲細語，看起來______。",
+    story:"孔子曾經說：「如果一個人只有內在的好品德，但外表粗魯，就像沒開化的野人；如果只注重外表打扮，卻沒有真才實學，就會顯得虛假。只有內在和外在搭配得剛剛好，才稱得上是真正的君子。」這就是「文質彬彬」的由來。"
+  },
+  {
+    idiom:"雕蟲小技",
+    meaning:"比喻很小的本領，不值得一提",
+    example:"這點小把戲只是______，不算什麼。",
+    story:"古時候有一種特別的書法叫做「蟲書」，字體彎彎曲曲像蟲子一樣。雖然寫起來很漂亮，但是學者們覺得這只是一種小技巧，沒有什麼實際用處。後來「雕蟲小技」就被用來形容不重要的小本領。"
+  },
+  {
+    idiom:"目光如豆",
+    meaning:"形容眼光短淺，看不到長遠的事情",
+    example:"做事不能______，要看得遠一點。",
+    story:"豆子非常小，如果一個人的眼光只能看到像豆子那麼近的地方，那他就看不到遠處更大更美的風景了。這個成語就是在說，做人做事要看得遠一點，不要只在意眼前的小利益，卻忘了未來更重要的事。"
+  },
+  {
+    idiom:"珠圓玉潤",
+    meaning:"形容聲音或文字非常圓滿好聽、流暢優美",
+    example:"她唱歌的聲音______，大家都聽得入迷。",
+    story:"珍珠又圓又亮，玉石摸起來又滑又潤。古人覺得最美的聲音，就應該像珍珠一樣圓滿、像玉石一樣溫潤。所以當我們聽到一個人唱歌特別好聽，或者讀到一篇文章特別流暢的時候，就會用「珠圓玉潤」來稱讚。"
+  },
+  {
+    idiom:"老成持重",
+    meaning:"形容做事穩重、有經驗，不會衝動",
+    example:"班長做事______，老師很放心。",
+    story:"「老成」指的是經驗豐富、成熟穩定，「持重」就是做事慎重、不衝動。就像班上那個遇到事情不會慌張、總是冷靜想辦法的同學。大人們常常喜歡把重要的事情交給這種可靠的人來做。"
+  },
+  {
+    idiom:"口誅筆伐",
+    meaning:"用說的和寫的方式嚴厲批評壞人壞事",
+    example:"大家紛紛______，批評那個不公平的做法。",
+    story:"「誅」和「伐」都是攻擊的意思。古時候遇到不公平的事情，正義的人們會用嘴巴大聲說出來，也會用筆寫文章告訴大家。就像現在有人做了壞事，大家會在報紙和網路上批評他一樣，用文字和言語的力量來對抗不公義。"
+  },
+  {
+    idiom:"勢均力敵",
+    meaning:"雙方的力量差不多，不分上下",
+    example:"這兩支球隊______，比賽一定很精彩。",
+    story:"「勢」是氣勢，「力」是力量，「均」和「敵」都是相等的意思。想像兩個人在拔河，雙方都很用力，繩子一直停在中間不動，誰也拉不過誰。這就是「勢均力敵」的畫面，雙方旗鼓相當，比賽結果很難預料。"
+  },
+  {
+    idiom:"光怪陸離",
+    meaning:"形容現象很奇特、五花八門",
+    example:"夜市裡的東西______，什麼都有。",
+    story:"「光怪」是奇怪的光芒，「陸離」是顏色繽紛的樣子。就像萬花筒裡面的世界，轉一轉就會看到各種五顏六色、千奇百怪的圖案。後來就用「光怪陸離」來形容很多新奇、千變萬化的事物。"
+  },
+  {
+    idiom:"匹夫之勇",
+    meaning:"只靠蠻力、不用腦筋的勇敢",
+    example:"遇到困難要動腦想辦法，不能只靠______。",
+    story:"古時候有些人打架只知道往前衝，完全不想策略和計畫。孟子說：「這種勇敢只是一個人的勇敢，真正的勇者應該用智慧保護更多人。」就像下棋一樣，不能只會往前衝，還要想好下一步才行。"
+  },
+  {
+    idiom:"以德報怨",
+    meaning:"用好的態度對待曾經對不起你的人",
+    example:"他不記恨同學，選擇______，大家都很佩服他。",
+    story:"有人問孔子：「別人對我不好，我用好的態度回報他，這樣做對不對？」這個問題到今天大家還在討論。不過能夠不記仇、用善良的心對待曾經傷害你的人，確實是一件很了不起的事，需要很大的勇氣和包容心。"
+  },
+  {
+    idiom:"精益求精",
+    meaning:"已經做得很好了，還要追求更好",
+    example:"他的作品已經很棒了，但他______，繼續修改。",
+    story:"古時候有個玉匠，把一塊玉石雕刻得很漂亮了，但他覺得還不夠好，於是又花了好幾個月反覆打磨、修改。最後這塊玉變成了一件絕世珍品。「精益求精」告訴我們，好還要更好，永遠不要停止進步。"
+  },
+  {
+    idiom:"民不聊生",
+    meaning:"老百姓的生活非常痛苦，活不下去",
+    example:"故事裡的壞國王害得______，人民好可憐。",
+    story:"「聊」在這裡是「依靠」的意思，「民不聊生」就是人民沒辦法好好活下去。古時候如果遇到壞皇帝亂收稅、打仗不停，老百姓吃不飽、穿不暖，日子過得很痛苦，大家就會說「民不聊生」。"
+  },
+  {
+    idiom:"虎視眈眈",
+    meaning:"像老虎一樣盯著獵物看，比喻心懷不軌地注視",
+    example:"隔壁班的選手______地看著我們的分數。",
+    story:"你有沒有在動物園看過老虎的眼神？當老虎發現獵物的時候，牠會趴低身體，用銳利的眼睛死死地盯著對方，隨時準備撲過去。「虎視眈眈」就是形容一個人像老虎一樣，用充滿野心的眼神看著想要得到的東西。"
+  },
+  {
+    idiom:"義憤填膺",
+    meaning:"看到不公平的事情，心中充滿了正義的憤怒",
+    example:"看到有人欺負小動物，大家都______。",
+    story:"「膺」就是胸膛的意思。當你看到有人欺負弱小、做不公平的事情，你的胸口會覺得好生氣、好氣憤，感覺整個胸膛都被憤怒塞滿了。這種因為正義感而產生的憤怒，就叫做「義憤填膺」。"
+  },
+  {
+    idiom:"理直氣壯",
+    meaning:"因為道理站在自己這邊，所以說話很有底氣",
+    example:"他沒有做錯事，所以______地為自己解釋。",
+    story:"如果你明明沒有做錯事，卻被別人冤枉了，你說話的時候一定會很有底氣，因為道理站在你這邊。「理直」就是道理正確，「氣壯」就是氣勢很足。有道理的人說話自然會有信心，不需要害怕。"
+  },
+  {
+    idiom:"逃之夭夭",
+    meaning:"形容跑得很快、趕緊逃走",
+    example:"小狗打翻了垃圾桶，馬上______。",
+    story:"這個成語很有趣！《詩經》裡原本有一句「桃之夭夭」，是形容桃花開得很美麗。後來有人開玩笑，把「桃」換成「逃」，變成「逃之夭夭」，用來形容一個人跑得飛快、一溜煙就不見了。"
+  },
+  {
+    idiom:"耳提面命",
+    meaning:"在耳邊叮嚀、當面教導，形容非常認真地教誨",
+    example:"媽媽______地提醒我過馬路要小心。",
+    story:"古時候長輩教導小孩的時候，會拉著小孩的耳朵湊近來說，再面對面仔細叮嚀。雖然現在的爸爸媽媽不會真的拉你的耳朵，但他們反覆提醒你的那些話——吃飽了嗎、功課寫了嗎、路上小心——就是「耳提面命」。"
+  },
+  {
+    idiom:"手足無措",
+    meaning:"不知道該怎麼辦，非常慌張",
+    example:"突然被老師點名上台，他嚇得______。",
+    story:"「手足」就是手和腳，「無措」就是不知道放在哪裡。想像你突然被叫上台演講，但你完全沒準備。你的手不知道要放在口袋裡還是背後，腳也不知道要站前面還是後面，整個人就像機器人當機了一樣，這就是「手足無措」。"
+  },
+  {
+    idiom:"抱薪救火",
+    meaning:"用錯誤的方法解決問題，反而讓問題更嚴重",
+    example:"吵架的時候說氣話就像______，只會越吵越兇。",
+    story:"從前有個人看到房子著火了，他急忙跑去抱了一大堆木柴想要幫忙。結果他把木柴丟進火裡，火不但沒有滅，反而燒得更旺了！他用了錯誤的方法救火，反而把事情弄得更糟。做事情如果用錯方法，就跟抱著木柴去救火一樣。"
+  },
+  {
+    idiom:"明察秋毫",
+    meaning:"形容觀察力非常敏銳，連最細小的事都看得到",
+    example:"老師______，誰偷吃東西馬上就知道。",
+    story:"「秋毫」是指秋天時動物身上長出來的細細小小的毛，非常非常細，一般人根本看不到。古人孟子說：「能看見秋毫那麼細小東西的人，表示他的眼力非常厲害。」後來就用「明察秋毫」形容一個人觀察力超強，什麼小細節都逃不過他的眼睛。"
+  }
 ];
 
-let quizMode = '', playerName = '', questions = [], currentQ = 0, score = 0, answered = false, results = [];
+var quizMode = '', playerName = '', questions = [], currentQ = 0, score = 0, answered = false, results = [];
+var storyIndex = 0;
 
-// ===== NAME INPUT =====
-const nameInput = document.getElementById('playerName');
-const btnMeaning = document.getElementById('btnMeaning');
-const btnFill = document.getElementById('btnFill');
-
-const savedName = localStorage.getItem('idiom_last_name') || '';
+// NAME INPUT
+var nameInput = document.getElementById('playerName');
+var btnMeaning = document.getElementById('btnMeaning');
+var btnFill = document.getElementById('btnFill');
+var savedName = localStorage.getItem('idiom_last_name') || '';
 if (savedName) { nameInput.value = savedName; updateButtons(); }
-
 nameInput.addEventListener('input', updateButtons);
 function updateButtons() {
-  const hasName = nameInput.value.trim().length > 0;
+  var hasName = nameInput.value.trim().length > 0;
   btnMeaning.disabled = !hasName;
   btnFill.disabled = !hasName;
 }
 
-// ===== UTILS =====
+// UTILS
 function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
   }
   return a;
 }
-
 function hideAll() {
-  ['startScreen','quizArea','resultScreen','leaderboardScreen'].forEach(id =>
-    document.getElementById(id).classList.add('hidden')
-  );
+  var ids = ['startScreen','quizArea','resultScreen','leaderboardScreen','storyScreen'];
+  for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).classList.add('hidden');
 }
 
-// ===== QUIZ =====
+// QUIZ
 function startQuiz(mode) {
   playerName = nameInput.value.trim();
   if (!playerName) return;
   localStorage.setItem('idiom_last_name', playerName);
-
   quizMode = mode;
   questions = shuffle(ALL_IDIOMS).slice(0, 10);
   currentQ = 0; score = 0; results = []; answered = false;
-
   hideAll();
   document.getElementById('quizArea').classList.remove('hidden');
   document.getElementById('playerTag').textContent = '👤 ' + playerName;
   renderQuestion();
 }
-
 function getDistractors(correct, count) {
-  return shuffle(ALL_IDIOMS.filter(i => i.idiom !== correct.idiom)).slice(0, count);
+  return shuffle(ALL_IDIOMS.filter(function(i) { return i.idiom !== correct.idiom; })).slice(0, count);
 }
-
 function renderQuestion() {
   answered = false;
-  const q = questions[currentQ];
-  const options = shuffle([q, ...getDistractors(q, 3)]);
-
+  var q = questions[currentQ];
+  var options = shuffle([q].concat(getDistractors(q, 3)));
   document.getElementById('progressLabel').textContent = '第 ' + (currentQ+1) + ' 題 / 共 ' + questions.length + ' 題';
   document.getElementById('scoreBadge').textContent = '⭐ ' + score;
   document.getElementById('progressFill').style.width = (currentQ / questions.length * 100) + '%';
-
-  let html = '<span class="q-number">第 ' + (currentQ+1) + ' 題</span>';
-
+  var html = '<span class="q-number">第 ' + (currentQ+1) + ' 題</span>';
   if (quizMode === 'meaning') {
     html += '<div class="q-text">「' + q.meaning + '」<br>這是哪一個成語呢？</div>';
   } else {
-    const sentence = q.example.replace('______', '<span class="blank">？？？？</span>');
-    html += '<div class="q-text">' + sentence + '</div>';
+    html += '<div class="q-text">' + q.example.replace('______', '<span class="blank">？？？？</span>') + '</div>';
   }
-
   html += '<div class="options">';
-  options.forEach(function(o) {
-    html += '<button class="opt-btn" data-idiom="' + o.idiom + '" onclick="selectAnswer(this,\'' + q.idiom + '\')">' + o.idiom + '</button>';
-  });
+  for (var i = 0; i < options.length; i++) {
+    html += '<button class="opt-btn" data-idiom="' + options[i].idiom + '" onclick="selectAnswer(this,\'' + q.idiom + '\')">' + options[i].idiom + '</button>';
+  }
   html += '</div><div id="feedback" class="hidden"></div>';
   html += '<button id="nextBtn" class="next-btn hidden" onclick="nextQuestion()">下一題 ➜</button>';
-
-  const card = document.getElementById('questionCard');
+  var card = document.getElementById('questionCard');
   card.innerHTML = html;
   card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'fadeUp .4s ease';
 }
-
 function selectAnswer(btn, correctIdiom) {
   if (answered) return;
   answered = true;
-  const selected = btn.getAttribute('data-idiom');
-  const isCorrect = selected === correctIdiom;
-  const q = questions[currentQ];
-
-  document.querySelectorAll('.opt-btn').forEach(function(b) { b.classList.add('disabled'); });
-
+  var selected = btn.getAttribute('data-idiom');
+  var isCorrect = selected === correctIdiom;
+  var q = questions[currentQ];
+  var allBtns = document.querySelectorAll('.opt-btn');
+  for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.add('disabled');
   if (isCorrect) {
     btn.classList.add('correct');
     score++;
     document.getElementById('scoreBadge').textContent = '⭐ ' + score;
   } else {
     btn.classList.add('wrong');
-    document.querySelectorAll('.opt-btn').forEach(function(b) {
-      if (b.getAttribute('data-idiom') === correctIdiom) b.classList.add('show-answer');
-    });
+    for (var i = 0; i < allBtns.length; i++) {
+      if (allBtns[i].getAttribute('data-idiom') === correctIdiom) allBtns[i].classList.add('show-answer');
+    }
   }
-
-  results.push({ idiom: q.idiom, meaning: q.meaning, correct: isCorrect });
-
-  const fb = document.getElementById('feedback');
+  results.push({ idiom: q.idiom, meaning: q.meaning, story: q.story, correct: isCorrect });
+  var fb = document.getElementById('feedback');
   fb.classList.remove('hidden','correct','wrong');
   if (isCorrect) {
     fb.classList.add('correct');
     var cheers = ['太棒了！🎉','答對了！好厲害！✨','正確！你好聰明！💪','完全正確！🌟'];
-    fb.innerHTML = '<span class="fb-icon">✅</span>' + cheers[Math.floor(Math.random()*cheers.length)] + '<br>「<strong>' + q.idiom + '</strong>」：' + q.meaning;
+    fb.innerHTML = '<span class="fb-icon">✅</span>' + cheers[Math.floor(Math.random()*cheers.length)] +
+      '<br>「<strong>' + q.idiom + '</strong>」：' + q.meaning +
+      '<div class="fb-story"><strong>📖 故事：</strong>' + q.story + '</div>';
   } else {
     fb.classList.add('wrong');
-    fb.innerHTML = '<span class="fb-icon">❌</span>再想想喔！正確答案是「<strong>' + correctIdiom + '</strong>」<br>' + q.meaning;
+    fb.innerHTML = '<span class="fb-icon">❌</span>再想想喔！正確答案是「<strong>' + correctIdiom + '</strong>」<br>' + q.meaning +
+      '<div class="fb-story"><strong>📖 故事：</strong>' + q.story + '</div>';
   }
-
   var nb = document.getElementById('nextBtn');
   nb.classList.remove('hidden');
   nb.textContent = currentQ < questions.length - 1 ? '下一題 ➜' : '看結果 🏆';
 }
-
 function nextQuestion() {
   currentQ++;
-  if (currentQ >= questions.length) { showResult(); } else { renderQuestion(); }
+  if (currentQ >= questions.length) showResult(); else renderQuestion();
 }
 
-// ===== RESULT =====
+// RESULT
 function showResult() {
   saveScore(playerName, score, questions.length, quizMode);
-
   hideAll();
   var rs = document.getElementById('resultScreen');
   rs.classList.remove('hidden');
-
   var pct = score / questions.length;
   var emoji, title;
   if (pct === 1) { emoji='🏆'; title='滿分！超級厲害！'; }
@@ -473,10 +566,10 @@ function showResult() {
   else if (pct >= .6) { emoji='💪'; title='不錯喔！'; }
   else if (pct >= .4) { emoji='📖'; title='加油！'; }
   else { emoji='🤗'; title='沒關係！'; }
-
   var starCount = Math.max(1, Math.round(pct * 5));
-  var stars = '⭐'.repeat(starCount) + '☆'.repeat(5 - starCount);
-
+  var stars = '';
+  for (var i = 0; i < starCount; i++) stars += '⭐';
+  for (var i = 0; i < 5 - starCount; i++) stars += '☆';
   var html = '<span class="big-emoji">' + emoji + '</span>' +
     '<h2>' + playerName + '，' + title + '</h2>' +
     '<div class="star-row">' + stars + '</div>' +
@@ -484,29 +577,27 @@ function showResult() {
     '<div class="mode-select">' +
       '<button class="mode-btn primary" onclick="startQuiz(\'meaning\')">📝 再玩一次（看解釋選成語）</button>' +
       '<button class="mode-btn secondary" onclick="startQuiz(\'fill\')">✏️ 再玩一次（成語填空題）</button>' +
+      '<button class="mode-btn story-mode" onclick="showStoryList()">📖 成語故事圖鑑</button>' +
       '<button class="mode-btn ghost" onclick="showLeaderboard()">🏆 查看排行榜</button>' +
       '<button class="mode-btn" style="background:#DFE6E9;color:var(--text);" onclick="goHome()">🏠 回首頁</button>' +
     '</div>';
-
   var wrongs = results.filter(function(r) { return !r.correct; });
   if (wrongs.length > 0) {
     html += '<div class="review-section"><h3>📝 需要複習的成語：</h3>';
-    wrongs.forEach(function(r) {
-      html += '<div class="review-item"><span class="ri-icon">📌</span><div class="ri-text"><strong>' + r.idiom + '</strong>：' + r.meaning + '</div></div>';
-    });
+    for (var i = 0; i < wrongs.length; i++) {
+      html += '<div class="review-item"><span class="ri-icon">📌</span><div class="ri-text"><strong>' + wrongs[i].idiom + '</strong>：' + wrongs[i].meaning + '</div></div>';
+    }
     html += '</div>';
   }
-
   rs.innerHTML = html;
   if (pct >= .8) spawnConfetti();
 }
 
-// ===== LEADERBOARD =====
+// LEADERBOARD
 function getLeaderboard() {
   try { return JSON.parse(localStorage.getItem('idiom_leaderboard') || '[]'); }
   catch(e) { return []; }
 }
-
 function saveScore(name, sc, total, mode) {
   var lb = getLeaderboard();
   var modeLabel = mode === 'meaning' ? '解釋選成語' : '成語填空';
@@ -517,61 +608,116 @@ function saveScore(name, sc, total, mode) {
   lb.sort(function(a,b) { return b.pct - a.pct || b.score - a.score; });
   localStorage.setItem('idiom_leaderboard', JSON.stringify(lb.slice(0, 50)));
 }
-
 function showLeaderboard() {
   hideAll();
   var screen = document.getElementById('leaderboardScreen');
   screen.classList.remove('hidden');
-
   var lb = getLeaderboard();
   var html = '<h2>🏆 排行榜</h2><p class="lb-subtitle">看看誰是成語小達人！</p>';
-
   if (lb.length === 0) {
     html += '<div class="lb-empty"><span class="lb-empty-icon">📭</span>還沒有紀錄喔！<br>快去挑戰吧！</div>';
   } else {
-    lb.slice(0, 20).forEach(function(entry, i) {
+    for (var i = 0; i < Math.min(lb.length, 20); i++) {
       var rank = i + 1;
-      var rankClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
-      var topClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
-      var medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-
-      html += '<div class="lb-row ' + topClass + '">' +
-        '<div class="lb-rank ' + rankClass + '">' + medal + '</div>' +
-        '<div class="lb-info">' +
-          '<div class="lb-name">' + entry.name + '</div>' +
-          '<div class="lb-detail">' + entry.mode + '｜' + entry.date + '</div>' +
-        '</div>' +
-        '<div class="lb-score">' + entry.score + '<small> / ' + entry.total + '</small></div>' +
-      '</div>';
-    });
+      var rc = rank===1?'r1':rank===2?'r2':rank===3?'r3':'rn';
+      var tc = rank===1?'top1':rank===2?'top2':rank===3?'top3':'';
+      var medal = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+      html += '<div class="lb-row '+tc+'"><div class="lb-rank '+rc+'">'+medal+'</div>' +
+        '<div class="lb-info"><div class="lb-name">'+lb[i].name+'</div><div class="lb-detail">'+lb[i].mode+'｜'+lb[i].date+'</div></div>' +
+        '<div class="lb-score">'+lb[i].score+'<small> / '+lb[i].total+'</small></div></div>';
+    }
   }
-
-  html += '<div class="lb-actions">' +
-    '<button class="mode-btn primary" onclick="goHome()">🏠 回首頁</button>' +
-    (lb.length > 0 ? '<button class="clear-lb-btn" onclick="document.getElementById(\'clearConfirm\').classList.remove(\'hidden\')">🗑️ 清除所有紀錄</button>' : '') +
-  '</div>';
-
+  html += '<div class="lb-actions"><button class="mode-btn primary" onclick="goHome()">🏠 回首頁</button>' +
+    (lb.length > 0 ? '<button class="clear-lb-btn" onclick="document.getElementById(\'clearConfirm\').classList.remove(\'hidden\')">🗑️ 清除所有紀錄</button>' : '') + '</div>';
   screen.innerHTML = html;
 }
-
 function clearLeaderboard() {
   localStorage.removeItem('idiom_leaderboard');
   document.getElementById('clearConfirm').classList.add('hidden');
   showLeaderboard();
 }
 
-// ===== NAV =====
+// ===== STORY ENCYCLOPEDIA =====
+var storyViewMode = 'list'; // 'list' or 'detail'
+
+function showStoryList() {
+  storyViewMode = 'list';
+  hideAll();
+  var screen = document.getElementById('storyScreen');
+  screen.classList.remove('hidden');
+  var html = '<button class="back-home-btn" onclick="goHome()">' +
+    '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>回首頁</button>' +
+    '<h2>📖 成語故事圖鑑</h2><p class="story-subtitle">點選成語，閱讀背後的故事！</p>' +
+    '<div class="story-list">';
+  for (var i = 0; i < ALL_IDIOMS.length; i++) {
+    html += '<div class="story-list-item" onclick="showStoryDetail('+i+')">' +
+      '<div class="sli-num">'+(i+1)+'</div>' +
+      '<div class="sli-info"><div class="sli-idiom">'+ALL_IDIOMS[i].idiom+'</div>' +
+      '<div class="sli-meaning">'+ALL_IDIOMS[i].meaning+'</div></div>' +
+      '<div class="sli-arrow">›</div></div>';
+  }
+  html += '</div>';
+  screen.innerHTML = html;
+  screen.scrollTop = 0;
+  window.scrollTo(0,0);
+}
+
+function showStoryDetail(idx) {
+  storyViewMode = 'detail';
+  storyIndex = idx;
+  renderStoryDetail();
+}
+
+function renderStoryDetail() {
+  hideAll();
+  var screen = document.getElementById('storyScreen');
+  screen.classList.remove('hidden');
+  var item = ALL_IDIOMS[storyIndex];
+  var html = '<button class="back-home-btn" onclick="showStoryList()">' +
+    '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>返回列表</button>';
+
+  // nav
+  html += '<div class="story-nav">' +
+    '<button class="story-nav-btn" onclick="prevStory()" '+(storyIndex===0?'disabled':'')+'>' +
+      '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>' +
+    '<span class="story-counter">'+(storyIndex+1)+' / '+ALL_IDIOMS.length+'</span>' +
+    '<button class="story-nav-btn" onclick="nextStory()" '+(storyIndex===ALL_IDIOMS.length-1?'disabled':'')+'>' +
+      '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+  '</div>';
+
+  // card
+  html += '<div class="story-card">' +
+    '<div class="sc-idiom">'+item.idiom+'</div>' +
+    '<div class="sc-section"><span class="sc-label meaning-label">💡 意思</span><div class="sc-content">'+item.meaning+'</div></div>' +
+    '<div class="sc-section"><span class="sc-label story-label">📖 故事</span><div class="sc-story-text">'+item.story+'</div></div>' +
+    '<div class="sc-section"><span class="sc-label example-label">✏️ 例句</span><div class="sc-content">'+item.example.replace('______','<strong style="color:var(--primary)">'+item.idiom+'</strong>')+'</div></div>' +
+  '</div>';
+
+  html += '<button class="story-grid-btn" onclick="showStoryList()">📋 回到列表</button>';
+
+  screen.innerHTML = html;
+  screen.style.animation = 'none'; screen.offsetHeight; screen.style.animation = 'fadeUp .35s ease';
+  window.scrollTo(0,0);
+}
+
+function prevStory() {
+  if (storyIndex > 0) { storyIndex--; renderStoryDetail(); }
+}
+function nextStory() {
+  if (storyIndex < ALL_IDIOMS.length - 1) { storyIndex++; renderStoryDetail(); }
+}
+
+// NAV
 function goHome() {
   hideExitConfirm();
   hideAll();
   document.getElementById('startScreen').classList.remove('hidden');
   updateButtons();
 }
-
 function showExitConfirm() { document.getElementById('exitConfirm').classList.remove('hidden'); }
 function hideExitConfirm() { document.getElementById('exitConfirm').classList.add('hidden'); }
 
-// ===== CONFETTI =====
+// CONFETTI
 function spawnConfetti() {
   var colors = ['#FF6B35','#4ECDC4','#FFE66D','#E84393','#6C5CE7','#00B894'];
   for (var i = 0; i < 50; i++) {
